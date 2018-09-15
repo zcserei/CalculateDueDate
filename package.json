@@ -1,0 +1,14 @@
+{
+  "name": "calculateduedate",
+  "version": "1.0.0",
+  "description": "Calculate Due Date",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Cserei Zoltán <z@holist.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.1.2"
+  }
+}
