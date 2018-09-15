@@ -86,4 +86,97 @@ describe('calculateDueDate helpers', () => {
       assert.isFalse(isValidSubmit(new Date(2023, 8, 14, 18)))
     })
   })
+
+  describe('fullHoursUntilClose', () => {
+    it('should number of full hours until close', () => {
+      assert.equal(fullHoursUntilClose(new Date(2018, 8, 14, 13, 12, 11)), 3)
+    })
+  })
+
+  describe('hoursRolledOver', () => {
+    it('should return 0 for hours rolled over when task is finished later in the day than submission', () => {
+      assert.equal(hoursRolledOver(new Date(2018, 8, 14, 13, 12, 11), 2), 0)
+      assert.equal(hoursRolledOver(new Date(2018, 8, 14, 13, 12, 11), 10), 0)
+    })
+
+    it('should return number of hours rolled over when task is finished earlier in the day than submission', () => {
+      assert.equal(hoursRolledOver(new Date(2018, 8, 14, 13, 12, 11), 6), 3)
+    })
+  })
+
+  describe('targetHour', () => {
+    it('should return hour of expected completion without rollover', () => {
+      assert.equal(targetHour(new Date(2018, 8, 14, 13, 12, 11), 3), 16)
+    })
+
+    it('should return hour of expected completion with rollover', () => {
+      assert.equal(targetHour(new Date(2018, 8, 14, 13, 12, 11), 4), 9)
+    })
+  }
+
+  describe('targetDay', () => {
+    it('should return object with Y/M/D values for date of completion, without rollover, without weekend', () => {
+      assert.equal(targetDay(new Date(2018, 8, 14, 13, 12, 11), 3), {
+        year: 2018,
+        month: 8,
+        day: 14,
+      })
+    })
+
+    it('should return object with Y/M/D values for date of completion, without rollover, with weekend', () => {
+      assert.equal(targetDay(new Date(2018, 8, 14, 13, 12, 11), 11), {
+        year: 2018,
+        month: 8,
+        day: 17,
+      })
+    })
+
+    it('should return object with Y/M/D values for date of completion, with rollover, without weekend', () => {
+      assert.equal(targetDay(new Date(2018, 8, 12, 13, 12, 11), 4), {
+        year: 2018,
+        month: 8,
+        day: 13,
+      })
+
+      assert.equal(targetDay(new Date(2018, 8, 12, 13, 12, 11), 12), {
+        year: 2018,
+        month: 8,
+        day: 14,
+      }))
+    })
+
+    it('should return object with Y/M/D values for date of completion, with rollover, with weekend', () => {
+      assert.equal(targetDay(new Date(2018, 8, 13, 13, 12, 11), 12), {
+        year: 2018,
+        month: 8,
+        day: 17,
+      })
+
+      assert.equal(targetDay(new Date(2018, 8, 14, 13, 12, 11), 12), {
+        year: 2018,
+        month: 8,
+        day: 18,
+      })
+    })
+  })
+
+  describe('targetDate', () => {
+    it('should return Date object for turnaround time, without rollover, without weekend', () => {
+      assert.equal(targetDay(new Date(2018, 8, 14, 13, 12, 11), 3).getTime(), new Date(2018, 8, 14, 16, 12, 11).getTime())
+    })
+
+    it('should return Date object for turnaround time, without rollover, with weekend', () => {
+      assert.equal(targetDay(new Date(2018, 8, 14, 13, 12, 11), 11).getTime(), new Date(2018, 8, 17, 16, 12, 11).getTime())
+    })
+
+    it('should return Date object for turnaround time, with rollover, without weekend', () => {
+      assert.equal(targetDay(new Date(2018, 8, 12, 13, 12, 11), 4).getTime(), new Date(2018, 8, 13, 9, 12, 11).getTime())
+      assert.equal(targetDay(new Date(2018, 8, 12, 13, 12, 11), 12).getTime(), new Date(2018, 8, 14, 9, 12, 11).getTime())
+    })
+
+    it('should return Date object for turnaround time, with rollover, with weekend', () => {
+      assert.equal(targetDay(new Date(2018, 8, 13, 13, 12, 11), 12).getTime(), new Date(2018, 8, 17, 9, 12, 11).getTime())
+      assert.equal(targetDay(new Date(2018, 8, 14, 13, 12, 11), 12).getTime(), new Date(2018, 8, 18, 9, 12, 11).getTime())
+    }
+  })
 })
