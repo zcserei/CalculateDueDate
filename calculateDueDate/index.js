@@ -1,5 +1,6 @@
 const {
-  isValidSubmit
+  isValidSubmit,
+  targetDate,
 } = require('../helpers/calculateDueDate')
 
 const calculateDueDate = (submitDate, turnaroundTime) => {

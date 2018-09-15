@@ -30,10 +30,44 @@ const isValidSubmit = (date) => {
   return isWorkTime(date) && isPast(date)
 }
 
+const fullHoursUntilClose = (date) => {
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+
+  const remainingFullHours = Math.floor((17 * 3600 - hour * 3600 - minute * 60 - second)/3600)
+
+  return remainingFullHours
+}
+
+const hoursRolledOver = (date, turnaroundTime) => {
+  const withoutFullDays = turnaroundTime % 8
+  const hoursUntilClose = fullHoursUntilClose(date)
+  let hoursRolledOver = 0 // let's assume no rollover
+
+  if (withoutFullDays > hoursUntilClose) {
+    hoursRolledOver = withoutFullDays - hoursUntilClose
+  }
+
+  return hoursRolledOver
+}
+
+const targetHour = (date, turnaroundTime) => {
+  const rolledOver = hoursRolledOver(date, turnaroundTime)
+  let targetHour = rolledOver
+    ? 9 + rolledOver - 1
+    : date.getHours() + turnaroundTime % 8
+
+  return targetHour
+}
+
 module.exports = {
   isWorkDay,
   isWorkHour,
   isWorkTime,
   isPast,
   isValidSubmit,
+  fullHoursUntilClose,
+  hoursRolledOver,
+  targetHour,
 }
