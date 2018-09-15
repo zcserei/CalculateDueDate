@@ -4,7 +4,8 @@
   "description": "Calculate Due Date",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha \"./{,!(node_modules)/**/}*.test.js\"",
+    "start": "node index.js"
   },
   "author": "Cserei Zoltán <z@holist.io>",
   "license": "MIT",
