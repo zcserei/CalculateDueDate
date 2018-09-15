@@ -6,6 +6,11 @@ const {
   isWorkTime,
   isPast,
   isValidSubmit,
+  fullHoursUntilClose,
+  hoursRolledOver,
+  targetHour,
+  targetDay,
+  targetDate,
 } = require('./calculateDueDate')
 
 describe('calculateDueDate helpers', () => {
@@ -112,7 +117,7 @@ describe('calculateDueDate helpers', () => {
     it('should return hour of expected completion with rollover', () => {
       assert.equal(targetHour(new Date(2018, 8, 14, 13, 12, 11), 4), 9)
     })
-  }
+  })
 
   describe('targetDay', () => {
     it('should return object with Y/M/D values for date of completion, without rollover, without weekend', () => {
@@ -142,7 +147,7 @@ describe('calculateDueDate helpers', () => {
         year: 2018,
         month: 8,
         day: 14,
-      }))
+      })
     })
 
     it('should return object with Y/M/D values for date of completion, with rollover, with weekend', () => {
@@ -177,6 +182,6 @@ describe('calculateDueDate helpers', () => {
     it('should return Date object for turnaround time, with rollover, with weekend', () => {
       assert.equal(targetDay(new Date(2018, 8, 13, 13, 12, 11), 12).getTime(), new Date(2018, 8, 17, 9, 12, 11).getTime())
       assert.equal(targetDay(new Date(2018, 8, 14, 13, 12, 11), 12).getTime(), new Date(2018, 8, 18, 9, 12, 11).getTime())
-    }
+    })
   })
 })
