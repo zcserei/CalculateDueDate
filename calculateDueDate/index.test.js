@@ -7,6 +7,14 @@ describe('calculateDueDate', () => {
     it('should not accept submission dates that are not Date objects', () => {
       return true
     })
+
+    it('should not accept turnaround times that are not numbers', () => {
+      return true
+    })
+
+    it('should not accept turnaround times that are not integers', () => {
+      return true
+    })
     
     it('should not accept invalid submission days', () => {
       return true
