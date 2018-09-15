@@ -63,6 +63,8 @@ describe('calculateDueDate helpers', () => {
     })
 
     it('should return false for future date', () => {
+      // If my calculations are correct, when this baby hits 88 miles per hour...
+      // you're gonna see some serious shit.
       assert.isFalse(isPast(new Date(8640000000000000)))
     })
   })
