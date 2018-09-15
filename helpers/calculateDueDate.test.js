@@ -4,6 +4,8 @@ const {
   isWorkDay,
   isWorkHour,
   isWorkTime,
+  isPast,
+  isValidSubmit,
 } = require('./calculateDueDate')
 
 describe('calculateDueDate helpers', () => {
@@ -52,6 +54,34 @@ describe('calculateDueDate helpers', () => {
 
     it('should return false for non-work hours on non-work days', () => {
       assert.isFalse(isWorkTime(new Date(2018, 9, 16, 8)))
+    })
+  })
+
+  describe('isPast', () => {
+    it('should return true for past date', () => {
+      assert.isTrue(isPast(new Date(2018, 9, 14)))
+    })
+
+    it('should return false for future date', () => {
+      assert.isFalse(isPast(new Date(8640000000000000)))
+    })
+  })
+
+  describe('isValidSubmit', () => {
+    it('should return true for past working time', () => {
+      assert.isTrue(isValidSubmit(new Date(2018, 9, 14, 13)))
+    })
+
+    it('should return false for past non-working time', () => {
+      assert.isFalse(isValidSubmit(new Date(2018, 9, 14, 18)))
+    })
+
+    it('should return false for future working time', () => {
+      assert.isFalse(isValidSubmit(new Date(2023, 9, 14, 13))) // where do you see yourself in five years? 
+    })
+
+    it('should return false for future non-working time', () => {
+      assert.isFalse(isValidSubmit(new Date(2023, 9, 14, 18)))
     })
   })
 })
