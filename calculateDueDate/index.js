@@ -1,3 +1,5 @@
-module.exports.calculateDueDate = (submitDate, turnaroundTime) => {
-  return true
+const calculateDueDate = (submitDate, turnaroundTime) => {
+  return true 
 }
+
+module.exports = { calculateDueDate }
