@@ -1,3 +1,8 @@
+const OPENHOUR = 9
+const CLOSEHOUR = 17
+const HOUR = 3600
+const MINUTE = 60
+
 const isWorkDay = (date) => {
   const day = date.getDay()
 
@@ -9,7 +14,7 @@ const isWorkHour = (date) => {
   const minute = date.getMinutes()
   const second = date.getSeconds()
 
-  if ((hour >= 9 && hour < 17) || (hour === 17 && minute === 0 && second === 0)) {
+  if ((hour >= OPENHOUR && hour < CLOSEHOUR) || (hour === CLOSEHOUR && minute === 0 && second === 0)) {
     return true
   } else {
     return false
@@ -31,11 +36,11 @@ const isValidSubmit = (date) => {
 }
 
 const fullHoursUntilClose = (date) => {
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
+  const hourCount = date.getHours()
+  const minuteCount = date.getMinutes()
+  const secondCount = date.getSeconds()
 
-  const remainingFullHours = Math.floor((17 * 3600 - hour * 3600 - minute * 60 - second)/3600)
+  const remainingFullHours = Math.floor((17 * HOUR - hourCount * HOUR - minuteCount * MINUTE - secondCount)/HOUR)
 
   return remainingFullHours
 }
@@ -55,10 +60,56 @@ const hoursRolledOver = (date, turnaroundTime) => {
 const targetHour = (date, turnaroundTime) => {
   const rolledOver = hoursRolledOver(date, turnaroundTime)
   let targetHour = rolledOver
-    ? 9 + rolledOver - 1
+    ? OPENHOUR + rolledOver
     : date.getHours() + turnaroundTime % 8
 
   return targetHour
+}
+
+const targetDay = (date, turnaroundTime) => {
+  let rolledOver = hoursRolledOver(date, turnaroundTime)
+  let fullWorkDays = Math.floor(turnaroundTime/8)
+  
+  const rolledOverDays = date.getDay() === 5 ? 3 : 1
+  console.log('rolledOver')
+  console.log(rolledOver)
+  console.log('----')
+  console.log(hoursRolledOver(new Date(2018, 8, 14, 16), 42))
+  console.log('----')
+  if (rolledOver > 0) {
+    date.setDate(date.getDate() + rolledOverDays)
+  }
+  console.log('fullWorkDays')
+  console.log(fullWorkDays)
+  while (fullWorkDays > 0) {
+
+    date.setDate(date.getDate() + 1)
+
+    if (isWorkDay(date)) {
+      fullWorkDays -= 1
+    }
+  } 
+
+
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth(),
+    day: date.getDate(),
+  }
+}
+
+const targetDate = (date, turnaroundTime) => {
+  const day = targetDay(date, turnaroundTime)
+  const hour = targetHour(date, turnaroundTime)
+
+  return new Date(
+    day.year,
+    day.month,
+    day.day,
+    hour,
+    date.getMinutes(),
+    date.getSeconds()
+  )
 }
 
 module.exports = {
@@ -70,4 +121,6 @@ module.exports = {
   fullHoursUntilClose,
   hoursRolledOver,
   targetHour,
+  targetDay,
+  targetDate,
 }

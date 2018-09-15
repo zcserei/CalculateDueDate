@@ -49,7 +49,7 @@ describe('calculateDueDate', () => {
     })
 
     it('should calculate target date for the day following next day', () => {
-      assert.equal(calculateDueDate(new Date(2018, 8, 10, 13), 16).getTime(), new Date(2018, 8, 11, 13).getTime())
+      assert.equal(calculateDueDate(new Date(2018, 8, 10, 13), 16).getTime(), new Date(2018, 8, 12, 13).getTime())
     })
   })
 

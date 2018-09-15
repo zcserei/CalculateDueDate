@@ -115,7 +115,7 @@ describe('calculateDueDate helpers', () => {
     })
 
     it('should return hour of expected completion with rollover', () => {
-      assert.equal(targetHour(new Date(2018, 8, 14, 13, 12, 11), 4), 9)
+      assert.equal(targetHour(new Date(2018, 8, 14, 13, 12, 11), 4), 10)
     })
   })
 
@@ -175,13 +175,13 @@ describe('calculateDueDate helpers', () => {
     })
 
     it('should return Date object for turnaround time, with rollover, without weekend', () => {
-      assert.equal(targetDate(new Date(2018, 8, 12, 13, 12, 11), 4).getTime(), new Date(2018, 8, 13, 9, 12, 11).getTime())
-      assert.equal(targetDate(new Date(2018, 8, 12, 13, 12, 11), 12).getTime(), new Date(2018, 8, 14, 9, 12, 11).getTime())
+      assert.equal(targetDate(new Date(2018, 8, 12, 13, 12, 11), 4).getTime(), new Date(2018, 8, 13, 10, 12, 11).getTime())
+      assert.equal(targetDate(new Date(2018, 8, 12, 13, 12, 11), 12).getTime(), new Date(2018, 8, 14, 10, 12, 11).getTime())
     })
 
     it('should return Date object for turnaround time, with rollover, with weekend', () => {
-      assert.equal(targetDay(new Date(2018, 8, 13, 13, 12, 11), 12).getTime(), new Date(2018, 8, 17, 9, 12, 11).getTime())
-      assert.equal(targetDay(new Date(2018, 8, 14, 13, 12, 11), 12).getTime(), new Date(2018, 8, 18, 9, 12, 11).getTime())
+      assert.equal(targetDate(new Date(2018, 8, 13, 13, 12, 11), 12).getTime(), new Date(2018, 8, 17, 10, 12, 11).getTime())
+      assert.equal(targetDate(new Date(2018, 8, 14, 13, 12, 11), 12).getTime(), new Date(2018, 8, 18, 10, 12, 11).getTime())
     })
   })
 })

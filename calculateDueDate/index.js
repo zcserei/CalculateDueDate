@@ -19,6 +19,9 @@ const calculateDueDate = (submitDate, turnaroundTime) => {
   if (!Number.isInteger(turnaroundTime)) {
     throw new Error('Turnaround time must be an integer')
   }
+
+  return targetDate(submitDate, turnaroundTime)
+
 }
 
 module.exports = { calculateDueDate }
