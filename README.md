@@ -15,3 +15,7 @@ Calculate Due Date is a simple utility to calculate the due date for a submitted
 `npm test` will run the unit tests.
 
 **Note:** You need to have Mocha installed globally to run the tests. In order to do so, run `npm install -g mocha`. Tested with version `5.2.0`.
+
+## Usage
+
+Call the `calculateDueDate` or `targetDate` functions with the appropriate parameters to reveal the expected turnaround time.
