@@ -18,4 +18,4 @@ Calculate Due Date is a simple utility to calculate the due date for a submitted
 
 ## Usage
 
-Call the `calculateDueDate` or `targetDate` functions with the appropriate parameters to reveal the expected turnaround time.
+Call the `calculateDueDate` function with the appropriate parameters to reveal the expected turnaround time.
